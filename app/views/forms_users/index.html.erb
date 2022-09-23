@@ -1,0 +1,31 @@
+<div class="row">
+	<div class="col-md-9">
+		<h1>Listing Forms/Users</h1>
+	</div>
+	<div class="col-md-3 pull-right">
+		<%= link_to "#{fa_icon("plus")} New Form/User".html_safe, new_forms_user_path, :class=>"btn btn-primary" %>
+	</div>
+</div>
+<table class="table table-hover">
+  <tr>
+    <th>User</th>
+    <th>Form</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @forms_users.each do |forms_user| %>
+  <tr>
+    <td><%= forms_user.user.full_name %></td>
+    <td><%= forms_user.form.name %></td>
+    <td><%= link_to 'Show', forms_user %></td>
+    <td><%= link_to '', edit_forms_user_path(forms_user), :class=>"glyphicon glyphicon-pencil"  %></td>
+    <td><%= link_to '', forms_user, :class=>"glyphicon glyphicon-trash", method: :delete, data: { confirm: "Are you sure?"} %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Forms user', new_forms_user_path %>

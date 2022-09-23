@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-md-9">
+    <h1>Listing Asset</h1>
+  </div>
+  <div class="col-md-3 pull-right">
+    <%= link_to "#{fa_icon("plus")} New Asset".html_safe, new_computer_path, :class=>"btn btn-primary" %>
+  </div>
+</div>
+<table class="table table-hover">
+  <tr>
+    <th>Name</th>
+    <th>Asset</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @computers.each do |computers| %>
+  <tr>
+    <td><%= computers.name %></td>
+    <td><%= computers.asset_id %></td>
+    <td><%= link_to 'Show', computers %></td>
+    <td><%= link_to '', edit_computer_path(computers), :class=>"glyphicon glyphicon-pencil" %></td>
+    <td><%= link_to '', computers, method: :delete, :class=>"glyphicon glyphicon-trash" , data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>

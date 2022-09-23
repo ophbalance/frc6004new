@@ -1,0 +1,76 @@
+<div class="row">
+	<%= search_form_for @search, :class=>"form-horizontal" do |f| %>
+		<div class="form-group row">
+			<div class="form-group col-md-4">
+			    <%= f.label :user_name_first_cont, "First Name contains", :class=>"control-label" %>
+				<%= f.text_field :user_name_first_cont, :class=>"form-control" %>
+
+			</div>
+			<div class="form-group col-md-4">
+			    <%= f.label :user_name_last_cont, "Last Name contains", :class=>"control-label" %>
+				<%= f.text_field :user_name_last_cont, :class=>"form-control", :id=>"user_name_last" %>
+			</div>
+			<div class="form-group col-md-4">
+		    	<%= f.label :year_id_eq, "Year", :class=>"control-label" %>
+			<%= f.select :year_id_eq,  Year.order("year_start asc").collect{|c| [c.year_range, c.id]}, {:include_blank=>true},{ :class=>"form-control", :id=>"year" }%>
+		  	</div>
+		</div>
+		<div class="form-group row">
+		  	<div class="form-group col-md-4">
+			    <%= f.label :timein_gteq, "Date between", :class=>"control-label" %>
+			    <%= f.text_field :timein_gteq, :class=>"form-control" %>
+			</div>
+			<div class="form-group col-md-4">
+			    <%= f.label :timein_lteq, "and", :class=>"control-label" %>
+				<%= f.text_field :timein_lteq, :class=>"form-control" %>   
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group  col-sm-3 pull-right">
+				<%= f.submit "Search", :class=>"btn btn-primary col-sm-12" %>
+			</div>
+		</div>
+	<% end %>
+</div>
+
+<hr />
+<%if current_user.try(:admin)%>
+	<%= paginate @timelogs %>
+	<table class="table table-hover">
+	  <tr>
+		<th><%= sort_link(@search, :user_name_first, "User") %></th>
+		<th><%= sort_link(@search, :asset_name, "Asset") %></th>
+		<th><%= sort_link(@search, :timein, "Time in") %></th>
+		<th><%= sort_link(@search, :timeout, "Time out") %></th>
+		<th><%= sort_link(@search, :duration, "Duration") %></th>
+		<th><%= sort_link(@search, :year_year_start, "Year") %></th>
+	    <th></th>
+	    <th></th>
+	    <th></th>
+	  </tr>
+
+	<% @timelogs.each do |timelog| %>
+	  <tr>
+		<td><%= "#{timelog.user.name_first rescue ""} #{timelog.user.name_last rescue ""}" %></td>
+		<td><%= "#{timelog.computer.name rescue ""}" %></td>
+	    <td><%= local_time timelog.timein rescue ""%></td>
+	    <td><%= local_time timelog.timeout rescue ""%></td>
+		<td><%= duration_format(timelog.time_logged) rescue ""%></td>
+		<td><%= timelog.year.year_range rescue ""%></td>
+	    <td><%= link_to 'Show', timelog %></td>
+	    <td><%= link_to '', edit_timelog_path(timelog), :class=>"glyphicon glyphicon-pencil" %></td>
+		<td><%= link_to '', timelog, :class=>"glyphicon glyphicon-trash", method: :delete, data: { confirm: "Are you sure?"} %></td>
+	  </tr>
+	<% end %>
+	</table>
+
+	<br />
+
+	<%= link_to 'New Timelog', new_timelog_path %>
+<%end%>
+<script>
+$('#q_timein_gteq').datepicker({
+	dateFormat: 'yy-mm-dd'});
+$('#q_timein_lteq').datepicker({
+	dateFormat: 'yy-mm-dd'});
+</script>

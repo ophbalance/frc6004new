@@ -1,0 +1,72 @@
+<h1>Team <%=Constants::TEAM_NUMBER%> <%=Constants::TEAM_NAME%></h1>
+<p>Please ask an Admin to log in if you would like to check in.</p>
+<p>Sign in your own account to update your account info</p>
+
+<%if !current_user.nil? %>
+	<hr />
+	<p>If you would like to check your hours, see your <%=link_to "Profile", user_path(current_user)%></p>
+<%end%>
+
+<hr />
+
+<%if !current_user.nil?%>
+	<%if Constants::FLEX_HOURS>0%>
+		<%=render "flex_hours", :user=>current_user.id%>
+	<%end%>
+	<%=render "hour_exception", :user=>current_user.id%>
+<%end%>
+<%if !current_user.nil? && current_user.try(:admin)%>
+	<%if Year.current_year.id.nil?%>
+		<div class="alert alert-danger">
+			There isn't a year for today's date. Please create a year immediately. 
+		</div>
+	<%end%>
+	<h2>Important Links</h2>
+	<%if current_user.is_default_user%>
+		<h4>Check-in Page</h4>
+		<li><%=link_to "Student Login", studentlogin_path%></li>
+	<%end%>
+
+	<h4>User Management</h4>
+		<li><%=link_to "All Users (Students)", users_path%></li>
+		<li><%=link_to "Current Users (Students)", students_path%></li>
+		<li><%=link_to "User Requirement Status", current_hours_path%></li>
+		<li><%=link_to "Student Forms", student_forms_path%></li>
+		<li><%=link_to "New User", new_user_path%></li>
+		<li><%=link_to "Profile", user_path(current_user)%></li>
+   	 <h4>Forms</h4>
+  		<li><%=link_to "Forms", forms_path%></li>
+   		<li><%=link_to "New Form", new_form_path%></li>
+	 <h4>Timelogs</h4>
+   		<li><%=link_to "Timelogs", timelogs_path%></li>
+		<li><%=link_to "New Timelog", new_timelog_path%></li>
+	<h4>Messages to Students</h4>
+		<li><%=link_to "Messages", messages_path%></li>
+	      
+	 <h4><%=Constants::SCHOOL_NAME_REPLACEMENT%></h4> 
+   		<li><%=link_to Constants::SCHOOL_NAME_REPLACEMENT, schools_path%></li>
+		<li><%=link_to "New #{Constants::SCHOOL_NAME_REPLACEMENT}", new_school_path%></li>
+   	 <h4>Years</h4>
+  		<li><%=link_to "Years", years_path%></li>
+   		<li><%=link_to "New Year", new_year_path%></li>
+  	 <h4>Weeks</h4>
+ 		<li><%=link_to "Weeks", weeks_path%></li>
+ 		<li><%=link_to "Week Exceptions", week_exceptions_path%></li>
+  		<li><%=link_to "New Week Exceptions", new_week_exception_path%></li>
+  	 <h4>Flex Hours</h4>
+  	 	<li><%=link_to "Flex Hours", flex_hours_path%></li>
+  	 	<li><%=link_to "New Flex Hour", new_flex_hour_path%></li>
+  	 <h4>Hour Requirements <small>Set the hour requirements for build/pre season</small></h4>
+  	 	<li><%=link_to "Hour Requirements", requirements_path%></li>
+  	 	<li><%=link_to "New Hour Requirement", new_requirement_path%></li>
+  	 <h4>Hour Overrides <small>Manually updates a user's required build hours</small></h4>
+ 		<li><%=link_to "Hour Overrides", hour_overrides_path%></li>
+  		<li><%=link_to "New Hour Override", new_hour_override_path%></li>
+ 	 <h4>Hour Exceptions <small>Add a reason for missing hours</small></h4>
+		<li><%=link_to "Hour Exceptions", hour_exceptions_path%></li>
+ 		<li><%=link_to "New Hour Exception", new_hour_exception_path%></li>
+<%end%>
+ <h4>Statistics</h4> 
+	<li><%=link_to "Stats by week", stats_hours_path%></li>
+	<li><%=link_to "Stats based on #{Constants::SCHOOL_NAME_REPLACEMENT}", stats_schools_path%></li>
+	<li><%=link_to "Stats by Gender", stats_gender_path%></li>

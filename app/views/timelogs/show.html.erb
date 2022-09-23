@@ -1,0 +1,38 @@
+
+<p id="notice"><%= notice %></p>
+<%if current_user.try(:admin)%>
+<p>
+  <b>User:</b>
+  <%= @timelog.user.try(:full_name)%>
+</p>
+
+<p>
+  <b>Timein:</b>
+  <%= local_time @timelog.timein %>
+</p>
+
+<p>
+  <b>Timeout timestamp:</b>
+  <%= local_time @timelog.timeout rescue ""%>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%= @timelog.year.year_range rescue ""%> 
+</p>
+
+<p>
+  <b>Week:</b>
+  <%= link_to @timelog.week.week_range, @timelog.week rescue ""%> 
+</p>
+
+<p>
+  <b>Hours Logged:</b>
+  <%= duration_format(@timelog.time_logged) %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_timelog_path(@timelog) %> |
+<%= link_to 'Back', timelogs_path %>
+<%end%>

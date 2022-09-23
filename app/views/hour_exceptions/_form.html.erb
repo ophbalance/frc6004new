@@ -1,0 +1,43 @@
+<%=simple_form_for(@hour_exception, html: { class: 'form-horizontal' },wrapper: :horizontal_form,
+wrapper_mappings: {
+  check_boxes: :horizontal_radio_and_checkboxes,
+  radio_buttons: :horizontal_radio_and_checkboxes,
+  file: :horizontal_file_input,
+  boolean: :horizontal_boolean
+}) do |f|%>
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			Hour Exception Form
+		</div>
+		<div class="panel-body">
+			<%= f.error_notification %>
+			<%if current_user.admin?%>
+				<%= f.input :user_id, collection: User.active.order("lower(name_first)"),:label_method =>:full_name, :selected=>@user, input_html: {:include_blank => true}%>
+			<%end%>
+			<%= f.input :date_applicable, as: :string%>
+			<%= f.input :reason%>
+			<%if current_user.admin?%>
+				<%= f.input :submitter, :as=>:hidden, :input_html => { :value => current_user.email }%>
+				<%= f.input :date_sent, as: :string%>
+				<%= f.input :year_id, :as=>:hidden, :input_html => { :value => Year.current_year.id }%>
+				<%= f.input :made_up_hours%>
+			<%end%>
+			<div class="form-group">
+				<div class="col-sm-offset-3 col-sm-8">
+					<%= f.submit "Submit", :class=>"btn btn-success"%> <%= link_to 'Back', hour_exceptions_path, :class=>"btn btn-danger pull-right" %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<% end %>
+
+<script>
+$('#hour_exception_date_sent').datepicker({
+	dateFormat: 'yy-mm-dd'});
+$('#hour_exception_date_applicable').datepicker({
+	dateFormat: 'yy-mm-dd'});
+</script>

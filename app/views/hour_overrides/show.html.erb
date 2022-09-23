@@ -1,0 +1,26 @@
+<p>
+  <b>User:</b>
+  <%= @hour_override.user.full_name %>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%= @hour_override.year.year_range %>
+</p>
+
+<p>
+  <b>Hours required:</b>
+  <%= @hour_override.hours_required %>
+</p>
+
+<p>
+  <b>Reason:</b>
+  <%= @hour_override.reason %>
+</p>
+
+<div class="row">
+	<%if current_user.try(:admin)%>
+		<%=link_to fa_icon("pencil"), edit_hour_override_path(@hour_override), :class=>"btn btn-primary"%>
+	<%end%>
+	<%= link_to 'Back', hour_overrides_path, :class=>"btn btn-danger pull-right" %>
+</div>

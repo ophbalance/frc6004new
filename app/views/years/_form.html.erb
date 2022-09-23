@@ -1,0 +1,40 @@
+<%=simple_form_for(@year, html: { class: 'form-horizontal' },wrapper: :horizontal_form,
+wrapper_mappings: {
+  check_boxes: :horizontal_radio_and_checkboxes,
+  radio_buttons: :horizontal_radio_and_checkboxes,
+  file: :horizontal_file_input,
+  boolean: :horizontal_boolean
+}) do |f|%>
+<div class="col-md-2">
+</div>
+<div class="col-md-8">
+	<div class="panel panel-info">
+		<div class="panel-heading">
+			Year Form
+		</div>
+		<div class="panel-body">
+			<%= f.error_notification %>
+			<%= f.input :year_start, as: :string%>
+			<%= f.input :year_end, as: :string%>
+			<%= f.input :preseason_start, as: :string%>
+			<%= f.input :build_season_start, as: :string%>
+			<div class="form-group">
+				<div class="col-sm-offset-3 col-sm-8">
+					<%= f.submit "Submit", :class=>"btn btn-success"%> <%= link_to 'Back', years_path, :class=>"btn btn-danger pull-right" %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<% end %>
+
+<script>
+$('#year_year_start').datepicker({
+	dateFormat: 'yy-mm-dd'});
+$('#year_year_end').datepicker({
+	dateFormat: 'yy-mm-dd'});
+$('#year_preseason_start').datepicker({
+	dateFormat: 'yy-mm-dd'});
+$('#year_build_season_start').datepicker({
+	dateFormat: 'yy-mm-dd'});
+</script>

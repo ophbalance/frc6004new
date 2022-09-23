@@ -1,0 +1,11 @@
+<p>
+  <b>Name:</b>
+  <%= @school.name %>
+</p>
+
+<div class="row">
+	<%if current_user.try(:admin)%>
+		<%=link_to fa_icon("pencil"), edit_school_path(@school), :class=>"btn btn-primary"%>
+	<%end%>
+	<%= link_to 'Back', schools_path, :class=>"btn btn-danger pull-right" %>
+</div>

@@ -1,0 +1,15 @@
+	<%= simple_form_for(@computers) do |f| %>
+	<div class="form-inputs">
+    <%= f.error_notification %>
+	<%=f.input :name %>
+	<%=f.input :asset_id %>
+	<%=f.input :archive %>
+	<div class="form-group">
+		<div class="col-sm-offset-3 col-sm-8">
+			<%= f.submit "Submit", :class=>"btn btn-success"%> <%= link_to 'Back', computers_path, :class=>"btn btn-danger pull-right" %>
+		</div>
+	</div>
+  </div>
+
+	
+<% end %>

@@ -1,0 +1,62 @@
+<%if current_user.try(:admin) || current_user.id == @user.id || current_user.student_leader%>
+	<div class="row">
+		<div class="col-lg-8 col-md-8">
+			<h2><%=@user.full_name%></h2>
+		</div>
+		<div class="col-lg-1 col-md-1 pull-right">
+			<%= link_to fa_icon("pencil"), edit_user_path(@user) %> 
+			<%if current_user.try(:admin)%>
+				<%= link_to '', @user, :class=>"glyphicon glyphicon-trash", method: :delete, data: { confirm: "You sure? #{@user.email}" } %>
+			<%end%>
+		</div>
+	</div>
+	<hr />
+
+	<%@user.messages.each do |message|%>
+		<%=render "/messages/alert", :message=>message%>
+	<%end%>
+
+  <ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="#profile" role="tab" data-toggle="tab">Profile</a></li>
+
+    <li role="presentation"><a href="#hours" role="tab" data-toggle="tab">Hours</a></li>
+    <%if Constants::FLEX_HOURS>0%>
+      <li role="presentation"><a href="#flex" role="tab" data-toggle="tab">Flex Hours</a></li>
+    <%end%>
+    <li role="presentation"><a href="#exceptions" role="tab" data-toggle="tab">Missing Hours Explainations</a></li>
+
+    <%if current_user.admin%>
+      <li role="presentation"><a href="#timelogs" role="tab" data-toggle="tab">Timelogs</a></li>
+    <%end%>
+  </ul>
+  <br />
+
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="profile">
+      <%= render "users/profile/profile"%>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="hours">
+      <%=render "users/profile/hours"%>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="exceptions">
+      <%=render "users/profile/exceptions"%>
+    </div>
+
+    <div role="tabpanel" class="tab-pane" id="flex">
+      <%=render "users/profile/flex"%>
+    </div>
+
+    <%if current_user.admin%>
+        <div role="tabpanel" class="tab-pane" id="timelogs">
+          <%=render "users/profile/timelogs"%>
+        </div>
+    <%end%>
+    <%= link_to 'Back', users_path %>
+  </div>
+
+	
+<%else%>
+<i>You don't have permission to view this page.</i>
+<%end%>

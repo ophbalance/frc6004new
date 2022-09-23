@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @computers.name %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @computers.asset_id %>
+</p>
+
+<div class="row">
+	<%if current_user.try(:admin)%>
+		<%=link_to fa_icon("pencil"), edit_computer_path(@computers), :class=>"btn btn-primary"%>
+	<%end%>
+	<%= link_to 'Back', computer_path, :class=>"btn btn-danger pull-right" %>
+</div>

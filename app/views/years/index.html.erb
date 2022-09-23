@@ -1,0 +1,31 @@
+<div class="row">
+	<div class="col-md-9">
+		<h1>Listing Years</h1>
+	</div>
+	<div class="col-md-3 pull-right">
+		<%= link_to "#{fa_icon("plus")} New Year".html_safe, new_year_path, :class=>"btn btn-primary" %>
+	</div>
+</div>
+<table class="table table-hover">
+  <tr>
+    <th>Year start</th>
+    <th>Year end</th>
+	<th>Pre season start</th>
+    <th>Build season start</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @years.each do |year| %>
+  <tr>
+    <td><%= year.year_start %></td>
+    <td><%= year.year_end %></td>
+	<td><%= year.preseason_start %></td>
+    <td><%= year.build_season_start %></td>
+    <td><%= link_to 'Show', year %></td>
+    <td><%= link_to '', edit_year_path(year), :class=>"glyphicon glyphicon-pencil" %></td>
+    <td><%= link_to '', year, :class=>"glyphicon glyphicon-trash", method: :delete, data: { confirm: "Are you sure?"} %></td>
+  </tr>
+<% end %>
+</table>
